@@ -11,7 +11,7 @@
 void create_rnd(Table2048& table)
 {
 
-	if (table.amount >= 9)
+	if (table.getAmount() >= 9)
 	{
 		return;     // write an error for full table
 	}
@@ -23,126 +23,161 @@ void create_rnd(Table2048& table)
 
 void moveD(Table2048& table)
 {
-	for (int i = 0; i < 3; i++)
+	for (int k = 0; k < table.getSizeI(); k++)
 	{
-		if (table.y[i] == table.z[i])
+		for (int i = table.getSizeI() - 1; i > 0; i--)
 		{
-			table.z[i] = 0 - table.y[i] * 2;
-			table.y[i] = table.x[i];
-			table.x[i] = 0;
-		}
-		if (table.z[i] == 0)
-		{
-			table.z[i] = table.y[i];
-			table.y[i] = 0;
+
+			for (int j = 0; j < table.getSizeJ(); j++)
+			{
+				if (table.at(i, j).getNum() == 0)
+				{
+					table.at(i, j) += table.at(i - 1, j);
+				}
+			}
 		}
 	}
 
-	for (int i = 0; i < 3; i++)
+	for (int i = table.getSizeI() - 1; i > 0; i--)
 	{
-		if (table.x[i] == table.y[i])
+
+		for (int j = 0; j < table.getSizeJ(); j++)
 		{
-			table.y[i] = 0 - table.x[i] * 2;
-			table.x[i] = 0;
-		}
-		if (table.y[i] == 0)
-		{
-			table.y[i] = table.x[i];
-			table.x[i] = 0;
+			if (table.at(i, j) == table.at(i - 1, j) || (table.at(i, j).getNum() == 0))
+			{
+				table.at(i, j) += table.at(i - 1, j);
+			}
 		}
 	}
-	
-	for (auto& el : table.x)
-	{
-		el = abs(el);
-	}
-	for (auto& el : table.y)
-	{
-		el = abs(el);
-	}
-	for (auto& el : table.z)
-	{
-		el = abs(el);
-	}
+
+	table.changeState();
+
+
 }
 
 void moveU(Table2048& table)
 {
-	for (int i = 0; i < 3; i++)
+
+	for (int k = 0; k < table.getSizeI(); k++)
 	{
-		if (table.x[i] == table.y[i])
+		for (int i = 1; i < table.getSizeI(); i++)
 		{
-			table.x[i] = 0 - table.y[i] * 2;
-			table.y[i] = table.z[i];
-			table.z[i] = 0;
-		}
-		if (table.x[i] == 0)
-		{
-			table.x[i] = table.y[i];
-			table.y[i] = 0;
+			for (int j = 0; j < table.getSizeJ(); j++)
+			{
+				if (table.at(i - 1, j).getNum() == 0)
+				{
+					table.at(i - 1, j) += table.at(i, j);
+				}
+			}
 		}
 	}
 
-	for (int i = 0; i < 3; i++)
+
+	for (int i = 1; i < table.getSizeI(); i++)
 	{
-		if (table.y[i] == table.z[i])
+
+		for (int j = 0; j < table.getSizeJ(); j++)
 		{
-			table.y[i] = 0 - table.z[i] * 2;
-			table.z[i] = 0;
-		}
-		if (table.y[i] == 0)
-		{
-			table.y[i] = table.z[i];
-			table.z[i] = 0;
+			if (table.at(i - 1, j) ==  table.at(i, j) || table.at(i - 1, j).getNum() == 0)
+			{
+				table.at(i - 1, j) += table.at(i, j);
+			}
 		}
 	}
 
-	for (auto& el : table.x)
-	{
-		el = abs(el);
-	}
-	for (auto& el : table.y)
-	{
-		el = abs(el);
-	}
-	for (auto& el : table.z)
-	{
-		el = abs(el);
-	}
+	table.changeState();
+
+
 }
 
 void moveL(Table2048& table)
 {
+	for (int k = 0; k < table.getSizeI(); k++)
+	{
+		for (int j = table.getSizeI() - 1; j > 0; j--)
+		{
 
+			for (int i = 0; i < table.getSizeJ(); i++)
+			{
+				if (table.at(i, j).getNum() == 0)
+				{
+					table.at(i, j) += table.at(i, j - 1);
+				}
+			}
+		}
+	}
+
+	for (int j = table.getSizeI() - 1; j > 0; j--)
+	{
+		for (int i = 0; i < table.getSizeJ(); i++)
+		{
+			if (table.at(i, j) == table.at(i, j - 1) || (table.at(i, j).getNum() == 0))
+			{
+				table.at(i, j) += table.at(i, j - 1);
+			}
+		}
+	}
+
+	table.changeState();
 }
 
 void moveR(Table2048& table)
 {
+	for (int k = 0; k < table.getSizeJ(); k++)
+	{
+		for (int j = 1; j < table.getSizeJ(); j++)
+		{
+			for (int i = 0; i < table.getSizeI(); i++)
+			{
+				if (table.at(i, j - 1).getNum() == 0)
+				{
+					table.at(i, j - 1) += table.at(i, j);
+				}
+			}
+		}
+	}
 
+	for (int j = 1; j < table.getSizeJ(); j++)
+	{
+
+		for (int i = 0; i < table.getSizeI(); i++)
+		{
+			if (table.at(i, j - 1) == table.at(i, j) || table.at(i, j - 1).getNum() == 0)
+			{
+				table.at(i, j - 1) += table.at(i, j);
+			}
+		}
+	}
+
+	table.changeState();
 }
 
 
 void print_table(Table2048 table)
 {
-	std::cout << "Table:" << std::endl;
-	for (auto el : table.x)
-	{
-		std::cout << el << " ";
-	}
-	std::cout << std::endl;
-	for (auto el : table.y)
-	{
-		std::cout << el << " ";
-	}
-	std::cout << std::endl;
-	for (auto el : table.z)
-	{
-		std::cout << el << " ";
-	}
-	std::cout << std::endl;
+	
 }
 
 // TODO: This is an example of a library function
 void fnPlay2048LIB()
 {
+
+}
+
+std::ostream& operator << (std::ostream& os, Table2048& p)
+{
+	for (int i = 0; i < p.getSizeI(); i++)
+	{
+		for (int j = 0; j < p.getSizeJ(); j++)
+		{
+			os << p.at(i, j).getNum() << " ";
+		}
+		os << std::endl;
+	}
+	return os;
+}
+
+bool operator==(const Cell c1, const Cell c2)
+{
+	return (c1.getNum() == c2.getNum());
 }

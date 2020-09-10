@@ -14,75 +14,113 @@ int main(int argc, wchar_t* argv[])
 
 TEST(TestMove, TestDown1)
 {
-    Table2048 table;
-    table.x.at(2) = 4;
-    table.x.at(1) = 4;
-    table.y.at(0) = 4;
-    table.y.at(1) = 2;
-    table.z.at(1) = 2;
-    print_table(table);
+   Table2048 table;
 
-    moveD(table);
-    print_table(table);
-    ASSERT_EQ(table.z.at(1), 4);
-}
+   table.at(0, 0).setNum(4);
+   table.at(0, 1).setNum(4);
+   table.at(1, 1).setNum(4);
+   table.at(2, 1).setNum(8);
+   table.at(2, 2).setNum(8);
 
-TEST(TestMove, TestDown2)
-{
-    Table2048 table;
-    table.x.at(1) = 4;
-    table.y.at(2) = 2;
-    table.z.at(1) = 2;
-    table.z.at(0) = 2;
-    print_table(table);
+   std::cout << table << std::endl;
 
-    moveD(table);
-    print_table(table);
-    ASSERT_EQ(table.z.at(1), 2);
-}
+   moveD(table);
 
-TEST(TestMove, TestDown3)
-{
-    Table2048 table;
-    table.x.at(1) = 2;
-    table.x.at(2) = 4;
-    table.y.at(0) = 2;
-    table.z.at(1) = 2;
-    table.z.at(0) = 2;
-    print_table(table);
-
-    moveD(table);
-    print_table(table);
-    ASSERT_EQ(table.z.at(1), 4);
+   std::cout << table << std::endl;
 }
 
 TEST(TestMove, TestUp1)
 {
     Table2048 table;
-    table.x.at(1) = 2;
-    table.y.at(2) = 4;
-    table.y.at(1) = 2;
-    table.z.at(1) = 4;
-    print_table(table);
+
+    table.at(0, 0).setNum(4);
+    table.at(0, 1).setNum(4);
+    table.at(1, 1).setNum(4);
+    table.at(2, 1).setNum(8);
+    table.at(2, 2).setNum(8);
+
+    std::cout << table << std::endl;
 
     moveU(table);
-    print_table(table);
-    ASSERT_EQ(table.z.at(1), 0);
+
+    std::cout << table << std::endl;
 }
 
-TEST(TestMove, TestUp2)
+TEST(TestMove, TestRight1)
 {
     Table2048 table;
-    table.x.at(1) = 2;
-    table.x.at(2) = 4;
-    table.y.at(0) = 2;
-    table.z.at(1) = 2;
-    table.z.at(0) = 2;
-    print_table(table);
+
+    table.at(0, 0).setNum(4);
+    table.at(0, 1).setNum(4);
+    table.at(1, 1).setNum(4);
+    table.at(2, 1).setNum(8);
+    table.at(2, 2).setNum(8);
+
+    std::cout << table << std::endl;
+
+    moveR(table);
+
+    std::cout << table << std::endl;
+}
+
+//TEST(TestMove, TestUp1)
+//{
+//   /* Table2048 table;
+//    table.x.at(1) = 2;
+//    table.y.at(2) = 4;
+//    table.y.at(1) = 2;
+//    table.z.at(1) = 4;
+//    print_table(table);
+//
+//    moveU(table);
+//    print_table(table);
+//    ASSERT_EQ(table.z.at(1), 0);*/
+//}
+
+TEST(TestMove, TestLeft1)
+{
+    Table2048 table;
+
+    table.at(0, 0).setNum(4);
+    table.at(0, 1).setNum(4);
+    table.at(1, 1).setNum(4);
+    table.at(2, 1).setNum(8);
+    table.at(2, 2).setNum(8);
+
+    std::cout << table << std::endl;
+
+    moveL(table);
+
+    std::cout << table << std::endl;
+}
+
+TEST(TestMove, TestAll1)
+{
+    Table2048 table;
+
+    table.at(0, 0).setNum(4);
+    table.at(0, 1).setNum(4);
+    table.at(1, 1).setNum(4);
+    table.at(2, 1).setNum(8);
+    table.at(2, 2).setNum(8);
+
+    std::cout << table << std::endl;
+
+    moveD(table);
+
+    std::cout << table << std::endl;
+
+    moveL(table);
+
+    std::cout << table << std::endl;
 
     moveU(table);
-    print_table(table);
-    ASSERT_EQ(table.z.at(1), 0);
+
+    std::cout << table << std::endl;
+
+    moveR(table);
+
+    std::cout << table << std::endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
